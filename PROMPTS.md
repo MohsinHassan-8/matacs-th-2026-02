@@ -29,8 +29,8 @@ RULES
    other punctuation that is not in the text. If you cannot quote it, the
    status is "not_stated".
 5. For number fields, "value" must be a plain JSON number: digits only, no
-   words, units, currency symbols or commas (write six as 6, and 189,500 CAD as
-   189500). The unit comes from the field definition. For boolean fields use
+   words, units, currency symbols or commas (write six as 6, and 12,500 CAD as
+   12500). The unit comes from the field definition. For boolean fields use
    true or false, and only when status is "stated"; for "not_stated" or "ambiguous"
    the value must be null. Do not convert units, add up or compute anything.
 6. Output valid JSON that matches the OUTPUT SCHEMA in the user message, and nothing else.
