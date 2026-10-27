@@ -24,10 +24,14 @@ RULES
    - "ambiguous": the text is conditional, "to be confirmed", delegated to
      a third party, or contradicts itself
 4. Every "stated" or "ambiguous" field needs an "evidence" quote copied
-   word for word from the proposal (maximum 25 words). If you cannot
-   quote it, the status is "not_stated".
-5. Keep numbers and units exactly as written. Do not convert, add up or
-   compute anything.
+   word for word from the proposal (maximum 25 words). Do not add or change
+   characters: end the quote where the phrase ends, never add a full stop or
+   other punctuation that is not in the text. If you cannot quote it, the
+   status is "not_stated".
+5. For number fields, "value" must be a plain JSON number: digits only, no
+   words, units, currency symbols or commas (write six as 6, and 189,500 CAD as
+   189500). The unit comes from the field definition. For boolean fields use
+   true or false. Do not convert units, add up or compute anything.
 6. Output valid JSON that matches the OUTPUT SCHEMA in the user message, and nothing else.
 ```
 
@@ -56,7 +60,7 @@ OUTPUT SCHEMA:
     {
       "field_id": "string, one entry for EVERY field_id listed above",
       "status": "stated | not_stated | ambiguous",
-      "value": "number, true/false or short text exactly as written, or null",
+      "value": "plain number for number fields, true/false for boolean fields, short text for text fields, or null",
       "evidence": "verbatim quote from the proposal, or null",
       "note": "one short sentence if ambiguous, otherwise null"
     }
@@ -80,6 +84,8 @@ OUTPUT SCHEMA:
 
 - Output parses as JSON and matches the schema.
 - Every requested `field_id` is present exactly once.
-- Every `evidence` quote appears word for word in the source text. If not,
+- Every `evidence` quote appears in the source text (compared ignoring case,
+  extra spaces and trailing punctuation). If not,
   the fact is rejected and the proposal is flagged.
 - Any entry in `suspicious_text` raises a flag for the human reviewer.
+- A field that is not_stated, or ambiguous with a null value, counts as missing: 0 points and a flag.
