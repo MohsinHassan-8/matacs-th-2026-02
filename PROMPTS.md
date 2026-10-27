@@ -31,7 +31,8 @@ RULES
 5. For number fields, "value" must be a plain JSON number: digits only, no
    words, units, currency symbols or commas (write six as 6, and 189,500 CAD as
    189500). The unit comes from the field definition. For boolean fields use
-   true or false. Do not convert units, add up or compute anything.
+   true or false, and only when status is "stated"; for "not_stated" or "ambiguous"
+   the value must be null. Do not convert units, add up or compute anything.
 6. Output valid JSON that matches the OUTPUT SCHEMA in the user message, and nothing else.
 ```
 
@@ -88,4 +89,4 @@ OUTPUT SCHEMA:
   extra spaces and trailing punctuation). If not,
   the fact is rejected and the proposal is flagged.
 - Any entry in `suspicious_text` raises a flag for the human reviewer.
-- A field that is not_stated, or ambiguous with a null value, counts as missing: 0 points and a flag.
+- Status decides, not value: a weighted field that is not_stated or ambiguous counts as missing (0 points and a flag).
